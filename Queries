@@ -1,0 +1,23 @@
+SELECT Insurance_Provider, AVG(Billing_Amount) AS avg_billing_amount 
+FROM `data-with-yuel.healthcare_data_engineering.fact_table` 
+GROUP BY Insurance_Provider 
+LIMIT 10;
+
+SELECT 
+    Medical_Condition,
+    AVG(Billing_Amount) AS avg_billing_amount
+FROM `data-with-yuel.healthcare_data_engineering.fact_table`
+GROUP BY Medical_Condition
+ORDER BY avg_billing_amount DESC;
+
+SELECT AVG(Billing_Amount) AS avg_billing_amount
+FROM `data-with-yuel.healthcare_data_engineering.fact_table`;
+
+SELECT Insurance_Provider, SUM(Billing_Amount) AS total_billing_amount
+FROM `data-with-yuel.healthcare_data_engineering.fact_table`
+GROUP BY Insurance_Provider;
+
+SELECT admission_year, COUNT(*) AS total_admissions
+FROM `data-with-yuel.healthcare_data_engineering.date_dim`
+GROUP BY admission_year
+ORDER BY admission_year;
