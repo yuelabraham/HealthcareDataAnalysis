@@ -1,0 +1,33 @@
+CREATE OR REPLACE TABLE `data-with-yuel.healthcare_data_engineering.tbl_patient_analytics` AS (
+    SELECT 
+        f.date_id,
+        f.Name,
+        f.Age,
+        f.Gender,
+        f.Date_of_Admission,
+        f.Discharge_Date,
+        f.Blood_Type,
+        f.Medical_Condition,
+        f.Doctor,
+        f.Hospital,
+        f.Insurance_Provider,
+        f.Billing_Amount,
+        f.Room_Number,
+        f.Admission_Type,
+        f.Medication,
+        f.Test_Results,
+        d.admission_day,
+        d.admission_month,
+        d.admission_year,
+        d.admission_weekday,
+        d.discharge_day,
+        d.discharge_month,
+        d.discharge_year,
+        d.discharge_weekday,
+        FROM 
+        `data-with-yuel.healthcare_data_engineering.fact_table` f
+        JOIN 
+        `data-with-yuel.healthcare_data_engineering.date_dim` d  
+        ON 
+        f.date_id = d.date_id
+);
