@@ -1,0 +1,40 @@
+import pandas as pd
+df = pd.read_csv("/Users/yuelabraham/Downloads/data2/healthcare_dataset.csv")
+df.head()
+
+df.info()
+
+df['Date of Admission'] = pd.to_datetime(df['Date of Admission'])
+df['Discharge Date'] = pd.to_datetime(df['Discharge Date'])
+
+df.info()
+
+date_dim = df[['Date of Admission', 'Discharge Date']].drop_duplicates().reset_index(drop=True)
+
+date_dim['admission_day'] = date_dim['Date of Admission'].dt.day
+date_dim['admission_month'] = date_dim['Date of Admission'].dt.month
+date_dim['admission_year'] = date_dim['Date of Admission'].dt.year
+date_dim['admission_weekday'] = date_dim['Date of Admission'].dt.weekday
+
+date_dim['discharge_day'] = date_dim['Discharge Date'].dt.day
+date_dim['discharge_month'] = date_dim['Discharge Date'].dt.month
+date_dim['discharge_year'] = date_dim['Discharge Date'].dt.year
+date_dim['discharge_weekday'] = date_dim['Discharge Date'].dt.weekday
+
+date_dim
+
+date_dim.index
+
+date_dim['date_id'] = date_dim.index
+
+date_dim
+
+date_dim = date_dim[['date_id','Date of Admission', 'admission_day', 'admission_month', 'admission_year', 'admission_weekday', 'Discharge Date', 'discharge_day', 'discharge_month', 'discharge_year', 'discharge_weekday']]
+
+date_dim
+
+fact_table = df.merge(date_dim, on=['Date of Admission', 'Discharge Date']) \
+    [['date_id', 'Name', 'Age', 'Gender', 'Date of Admission', 'admission_day', 'admission_month', 'admission_year', 'admission_weekday', 
+      'Discharge Date', 'discharge_day', 'discharge_month', 'discharge_year', 'discharge_weekday', 
+      'Blood Type', 'Medical Condition', 'Doctor', 'Hospital', 'Insurance Provider', 
+      'Billing Amount', 'Room Number', 'Admission Type', 'Medication', 'Test Results']]
